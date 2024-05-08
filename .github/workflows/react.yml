@@ -16,6 +16,8 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: '20'
+    - name: Acessando o projeto
+      run: cd my-react-app
     - name: Instalar dependências
       run: npm install
     - name: Construir a aplicação React
