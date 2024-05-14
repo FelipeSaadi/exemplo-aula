@@ -64,15 +64,17 @@ jobs:
         with:
           name: sonarqube-analysis-report
           path: sonarqube-analysis-report.json
-
+          
   docker-deployment:
     needs: static-code-analysis
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Construir Docker Image
+        working-directory: ./my-react-app
         run: docker build -t my-react-app .
       - name: Rodar Docker Container
+        working-directory: ./my-react-app
         run: docker run -d -p 80:80 my-react-app
       - name: Checar se o container está rodando
         run: docker ps | grep my-react-app
