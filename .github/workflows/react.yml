@@ -93,7 +93,6 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
-        working-directory: ./my-react-app
         with:
           context: .
           file: ./Dockerfile
@@ -101,6 +100,7 @@ jobs:
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/my-react-app:test-${{ github.run_id }}
             ${{ secrets.DOCKER_USERNAME }}/my-react-app:latest
-
+        working-directory: ./my-react-app
+        
       - name: Logout from Docker Hub
         run: docker logout
