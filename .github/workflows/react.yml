@@ -95,12 +95,10 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./Dockerfile
+          file: ./my-react-app/Dockerfile
           push: true
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/my-react-app:test-${{ github.run_id }}
             ${{ secrets.DOCKER_USERNAME }}/my-react-app:latest
-        working-directory: ./my-react-app
-        
       - name: Logout from Docker Hub
         run: docker logout
