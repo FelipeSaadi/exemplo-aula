@@ -19,9 +19,6 @@ jobs:
     - name: Instalar dependências
       working-directory: ./my-react-app
       run: npm install
-    - name: Construir a aplicação React
-      working-directory: ./my-react-app
-      run: npm run build
     - name: Construir e rodar Docker
       working-directory: ./my-react-app
       run: |
@@ -49,12 +46,14 @@ jobs:
           done
           echo "SonarQube is ready."
       - name: Configure SonarQube Project and User
+        working-directory: ./my-react-app
         run: |
           curl -u admin:admin -X POST "http://localhost:9000/api/projects/create" -d "name=my-react-app" -d "project=my-react-app"
           curl -u admin:admin -X POST "http://localhost:9000/api/users/create" -d "login=sonaruser" -d "password=sonarpass" -d "name=Sonar User"
           TOKEN=$(curl -u admin:admin -X POST "http://localhost:9000/api/user_tokens/generate" -d "login=sonaruser" -d "name=token-for-github-actions" | jq -r '.token')
           echo "SONAR_TOKEN=$TOKEN" >> $GITHUB_ENV
       - name: SonarQube Scan
+        working-directory: ./my-react-app
         uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ env.SONAR_TOKEN }}
