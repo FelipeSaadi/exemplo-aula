@@ -46,7 +46,6 @@ jobs:
           done
           echo "SonarQube is ready."
       - name: Configure SonarQube Project and User
-        working-directory: ./my-react-app
         run: |
           curl -u admin:admin -X POST "http://localhost:9000/api/projects/create" -d "name=my-react-app" -d "project=my-react-app"
           curl -u admin:admin -X POST "http://localhost:9000/api/users/create" -d "login=sonaruser" -d "password=sonarpass" -d "name=Sonar User"
